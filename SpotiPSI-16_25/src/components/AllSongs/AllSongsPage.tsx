@@ -4,13 +4,13 @@ import SongsTable from '../../components/SongsTable/songsTable.tsx'
 
 const ALLSONGS = "כל השירים"
 
-const AllSongsPage = ({ songs, favoriteIds }: SongsProps) => {
+const AllSongsPage = ({ songs, favoriteIds, addHeart,  removeHeart }: SongsProps) => {
     const { classes } = useStyles()
 
     return (
         <div>
             <h1 className={classes.header}>{ALLSONGS}</h1>
-            <SongsTable songs={songs} favoriteIds={favoriteIds}/>
+            <SongsTable songs={songs} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>
         </div>
     )
 

@@ -26,7 +26,7 @@ import type { Song } from "../Types.tsx"
         fetchSongs()
     }, [])
 
-    return { data, isLoading, error }
+    return { data, setData , isLoading, error }
 }
 
 
@@ -57,6 +57,5 @@ export const useFetchServerFavorites = () => {
         fetchSongs()
     }, [])
 
-    return { data, isLoading, error }
-
+    return { data, setData , isLoading, error }
 }

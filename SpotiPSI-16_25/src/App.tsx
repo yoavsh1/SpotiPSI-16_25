@@ -12,10 +12,14 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState("songs")
   const {classes} = useStyles()
   
-  const onClickMenu = (str: string) => {setCurrentPage(str)}
-  const {data: songList, isLoading: songsLoading, error: songsError,} = useFetchServerSongs()
-  const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError} = useFetchServerFavorites()
+  
+  const {data: songList, isLoading: songsLoading, error: songsError} = useFetchServerSongs()
+  const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError,setData: setFavoriteIds} = useFetchServerFavorites()
 
+
+  const onClickMenu = (str: string) => {setCurrentPage(str)}
+  const addHeart = (id: string) => {setFavoriteIds(prev => [...prev, id])}
+  const removeHeart = (id: string) => {setFavoriteIds(prev => prev.filter((currentId: string) => id !== currentId))}
   const isLoading = songsLoading || favoritesLoading
   const error = songsError || favoritesError
 
@@ -29,14 +33,12 @@ const App = () => {
         <div className={classes.PageContent}>
           <div>
             {isLoading && <p>Loading...</p>}
-
             {error && <p>{error}</p>}
-
                     {!isLoading && !error && (
                       <div>
-                        {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} />}
-                        {currentPage === "playlists" && <AllSongsPage songs={songList} favoriteIds={favoriteIds}/>}
-                        {currentPage === "favorites" && <FavoritesPage songs={songList} favoriteIds={favoriteIds}/>}
+                        {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
+                        {currentPage === "playlists" && <AllSongsPage songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
+                        {currentPage === "favorites" && <FavoritesPage songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
                       </div>
                     )}
                 </div>

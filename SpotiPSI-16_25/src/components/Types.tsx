@@ -6,12 +6,17 @@
 }
 
 export interface SongProp{
-  song: Song
+  song: Song,
+  favorite: boolean,
+  addHeart: (str: string) => void,
+  removeHeart: (str: string) => void
 }
 
 export interface SongsProps {
   songs: Song[],
-  favoriteIds: string[]
+  favoriteIds: string[],
+  addHeart: (str: string) => void,
+  removeHeart: (str: string) => void
 }
 
 export interface SidebarProp{

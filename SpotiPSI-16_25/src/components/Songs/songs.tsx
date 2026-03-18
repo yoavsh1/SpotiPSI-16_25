@@ -11,10 +11,12 @@ import React, {useState} from "react"
 
 
 
-const SongComponent: React.FC<SongProp> = ({song} : SongProp) => {
+const SongComponent: React.FC<SongProp> = ({song, favorite, addHeart,  removeHeart } : SongProp) => {
     const { classes } = useStyles()
 
-    const [favoritePressed, setFavorite] = useState(false)
+
+
+    const [favoritePressed, setFavorite] = useState(favorite)
 
     const addOrRemoveFavorites = async (str: string) => {
 
@@ -36,7 +38,15 @@ const SongComponent: React.FC<SongProp> = ({song} : SongProp) => {
     };
 
     const onClickHeart = () => {
-        favoritePressed ? addOrRemoveFavorites("remove") : addOrRemoveFavorites("add")
+        if(favoritePressed) {
+            addOrRemoveFavorites("remove") 
+            removeHeart(song.id)
+        }
+        else{
+            addOrRemoveFavorites("add")
+            addHeart(song.id)
+        }
+            
         setFavorite(!favoritePressed)
     }
 
