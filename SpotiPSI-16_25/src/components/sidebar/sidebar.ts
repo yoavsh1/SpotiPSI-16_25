@@ -1,7 +1,8 @@
 import { makeStyles } from "tss-react/mui";
 
+
 const useStyles = makeStyles()(() => ({
-    itemMenu: {
+    item: {
         color: "white",
         margin: "10px",
         display: "flex",
@@ -9,7 +10,7 @@ const useStyles = makeStyles()(() => ({
         justifyContent: "center",
         width: "90%",
         '&:hover': {
-            backgroundColor: "DarkOrchid" 
+            backgroundColor: "DarkOrchid!important" 
         }
     },
     icon: {

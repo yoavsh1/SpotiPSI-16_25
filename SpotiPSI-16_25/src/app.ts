@@ -25,7 +25,10 @@ const useStyles = makeStyles()(() => ({
     sidebar: {
         backgroundColor: 'black',
         width: '240px', 
-        borderLeft: '1px solid grey' 
+        borderLeft: '1px solid grey',
+        display: 'flex',
+        flexDirection: "column",
+        alignItems: "flex-end"
     },
     PageContent: {
         backgroundColor: 'black',
