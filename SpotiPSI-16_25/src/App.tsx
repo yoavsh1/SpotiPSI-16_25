@@ -1,9 +1,21 @@
+import useStyles from './app'
+import MusicNoteIcon from '@mui/icons-material/MusicNote'
+import Sidebar from './components/sidebar/sidebar.tsx'
 import { useState, useEffect } from 'react'
 import type { Song } from "./components/Types"
 import AllSongsPage from "./components/AllSongsPage"
 import './App.css'
 
+
+const PLAY = "נגן שירים"
+const TITLE = "SpotiPsi"
 function App() {
+  
+  const [currentPage, setCurrentPage] = useState("songs")
+
+  const onClickMenu = (str: string) => {
+      setCurrentPage(str)
+  }
 const [songList, setSongList] = useState<Song[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
@@ -29,15 +41,43 @@ const [songList, setSongList] = useState<Song[]>([]);
     fetchSongs();
   }, []);
 
+  const {classes} = useStyles()
   return (
-    <div>
-      <h1>Songs List:</h1>
-      {isLoading && <p>Loading...</p>}
+      <div className={classes.mainContainer}>
+        <div className={classes.header}>
+          <span>{TITLE}</span>
+          <MusicNoteIcon />
+        </div>
+        <div className={classes.mainSection}>
 
-      {error && <p>{error}</p>}
 
-      {!isLoading && !error && (<AllSongsPage songs={songList}/>)}
-    </div>
+          <div className={classes.PageContent}>
+                <div>
+                    <h1>Songs List:</h1>
+                        {isLoading && <p>Loading...</p>}
+
+                          {error && <p>{error}</p>}
+
+                        {!isLoading && !error && (<AllSongsPage songs={songList}/>)}
+                </div>
+          </div>
+
+          
+          <div className={classes.sidebar}>
+            <Sidebar onClickMenu={onClickMenu}/>
+          </div>
+
+        </div>
+
+        <div className={classes.player}>
+          <p className={classes.textPlay}>{PLAY}</p>
+        </div>
+        
+
+
+      </div> 
+
+    
   )
 }
 
