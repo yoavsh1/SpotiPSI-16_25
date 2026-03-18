@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import type { Song } from "../components/Types.tsx"
+import type { Song } from "../Types.tsx"
 
  export const useFetchServerSongs = () => {
     const [data, setData] = useState<Song[]>([]);
