@@ -4,20 +4,22 @@ import Sidebar from './components/sidebar/sidebar.tsx'
 import { useState, useEffect } from 'react'
 import type { Song } from "./components/Types"
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
-
+import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
 
 const PLAY = "נגן שירים"
 const TITLE = "SpotiPsi"
-function App() {
-  
+const App = () => {
   const [currentPage, setCurrentPage] = useState("songs")
+  const {classes} = useStyles()
+
+  const [songList, setSongList] = useState<Song[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>();
+
 
   const onClickMenu = (str: string) => {
       setCurrentPage(str)
   }
-  const [songList, setSongList] = useState<Song[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>();
 
   const fetchSongs = async () => {
     setIsLoading(true);
@@ -36,11 +38,14 @@ function App() {
       setIsLoading(false);
     }
   };
+
+
   useEffect(() => {
     fetchSongs();
   }, []);
 
-  const {classes} = useStyles()
+
+  
   return (
       <div className={classes.mainContainer}>
         <div className={classes.header}>
@@ -54,7 +59,13 @@ function App() {
 
                       {error && <p>{error}</p>}
 
-                    {!isLoading && !error && (<AllSongsPage songs={songList}/>)}
+                    {!isLoading && !error && (
+                      <div>
+                        {currentPage === "songs" && <AllSongsPage songs={songList} />}
+                        {currentPage === "playlists" && <AllSongsPage songs={songList} />}
+                        {currentPage === "favorites" && <FavoritesPage songs={songList} />}
+                      </div>
+                    )}
                 </div>
           </div>
           
