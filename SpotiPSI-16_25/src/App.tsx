@@ -3,8 +3,7 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote'
 import Sidebar from './components/sidebar/sidebar.tsx'
 import { useState, useEffect } from 'react'
 import type { Song } from "./components/Types"
-import AllSongsPage from "./components/AllSongsPage"
-import './App.css'
+import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 
 
 const PLAY = "נגן שירים"
@@ -16,7 +15,7 @@ function App() {
   const onClickMenu = (str: string) => {
       setCurrentPage(str)
   }
-const [songList, setSongList] = useState<Song[]>([]);
+  const [songList, setSongList] = useState<Song[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
 
@@ -49,19 +48,15 @@ const [songList, setSongList] = useState<Song[]>([]);
           <MusicNoteIcon />
         </div>
         <div className={classes.mainSection}>
-
-
           <div className={classes.PageContent}>
                 <div>
-                    <h1>Songs List:</h1>
-                        {isLoading && <p>Loading...</p>}
+                    {isLoading && <p>Loading...</p>}
 
-                          {error && <p>{error}</p>}
+                      {error && <p>{error}</p>}
 
-                        {!isLoading && !error && (<AllSongsPage songs={songList}/>)}
+                    {!isLoading && !error && (<AllSongsPage songs={songList}/>)}
                 </div>
           </div>
-
           
           <div className={classes.sidebar}>
             <Sidebar onClickMenu={onClickMenu}/>
@@ -72,12 +67,7 @@ const [songList, setSongList] = useState<Song[]>([]);
         <div className={classes.player}>
           <p className={classes.textPlay}>{PLAY}</p>
         </div>
-        
-
-
-      </div> 
-
-    
+      </div>
   )
 }
 

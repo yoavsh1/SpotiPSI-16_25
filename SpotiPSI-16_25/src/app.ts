@@ -7,7 +7,11 @@ const useStyles = makeStyles()(() => ({
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh", 
-        width: "100%"
+        width: "100%",
+        fontFamily: [
+      'Arial',
+      'sans-serif',
+    ].join(','),
     },
     header: {
         backgroundColor: '#333333',
@@ -41,9 +45,8 @@ const useStyles = makeStyles()(() => ({
     textPlay:{
         color: 'white',
         textAlign: 'center'
-
-
     }
+    
 }))
 
 export default useStyles;

@@ -3,15 +3,11 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import React, { useRef } from 'react'
 import useStyles from './sidebar'
+import type { SidebarProp } from "../Types.tsx"
 const LOVED = "מעודפים"
 const PLAYLISTS = "פלייליסטים"
 const SONGS = "כל השירים"
 
-interface SidebarProp{
-    onClickMenu: (str: string) => void,
-
-
-}
 
 const Sidebar: React.FC<SidebarProp> = (prop: SidebarProp) => {
     const {classes} = useStyles()
