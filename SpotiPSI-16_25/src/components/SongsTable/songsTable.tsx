@@ -15,8 +15,8 @@ const SongsTable = ({ songs }: SongsProps) => {
     return (
         <div>
             {songs.map((song) => (
-                <div className={classes.song}>
-                    <div key={song.id} className={classes.songRow}>
+                <div  key={song.id} className={classes.song}>
+                    <div className={classes.songRow}>
                         <IconButton>
                             <PlayArrowIcon sx={{ color: "purple" }}></PlayArrowIcon>
                         </IconButton>
