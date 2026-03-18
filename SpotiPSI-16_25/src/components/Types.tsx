@@ -10,8 +10,9 @@ export interface SongProp{
 }
 
 export interface SongsProps {
-  songs: Song[]
-}
+  songs: Song[],
+  favoriteIds: string[]
+  }
 
 export interface SidebarProp{
     onClickMenu: (str: string) => void
