@@ -4,15 +4,16 @@ import Sidebar from './components/sidebar/sidebar.tsx'
 import { useState } from 'react'
 import {useFetchServerFavorites, useFetchServerSongs} from './hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
-
+import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
 
 const PLAY = "נגן שירים"
 const TITLE = "SpotiPsi"
-
-
 const App = () => {
-  const { classes } = useStyles()
   const [currentPage, setCurrentPage] = useState("songs")
+  const {classes} = useStyles()
+  const [songList, setSongList] = useState<Song[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>();
   const onClickMenu = (str: string) => {setCurrentPage(str)}
   const {data: songList, isLoading: songsLoading, error: songsError,} = useFetchServerSongs()
   const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError} = useFetchServerFavorites()
@@ -33,7 +34,14 @@ const App = () => {
 
             {error && <p>{error}</p>}
 
-            {!isLoading && !error && (<AllSongsPage songs={songList}  favoriteIds={favoriteIds} />)}
+                    {!isLoading && !error && (
+                      <div>
+                        {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} />}
+                        {currentPage === "playlists" && <AllSongsPage songs={songList} />}
+                        {currentPage === "favorites" && <FavoritesPage songs={songList} />}
+                      </div>
+                    )}
+                </div>
           </div>
         </div>
 

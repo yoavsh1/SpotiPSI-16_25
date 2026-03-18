@@ -5,6 +5,10 @@
     album: string 
 }
 
+export interface SongProp{
+  song: Song
+}
+
 export interface SongsProps {
   songs: Song[],
   favoriteIds: string[]
