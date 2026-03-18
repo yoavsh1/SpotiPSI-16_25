@@ -2,7 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import React, { useRef } from 'react'
-import useStyles from './sidebar'
+import useStyles from './sidebar.ts'
 import type { SidebarProp } from "../Types.tsx"
 const LOVED = "מעודפים"
 const PLAYLISTS = "פלייליסטים"

@@ -1,8 +1,8 @@
 import useStyles from './app'
 import MusicNoteIcon from '@mui/icons-material/MusicNote'
-import Sidebar from './components/sidebar/sidebar.tsx'
+import Sidebar from './components/Sidebar/sidebar.tsx'
 import { useState } from 'react'
-import {useFetchServerFavorites, useFetchServerSongs} from './components/hooks/FetchServer.tsx'
+import {useFetchServerFavorites, useFetchServerSongs} from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
 
