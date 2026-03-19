@@ -1,3 +1,4 @@
+
 import { makeStyles } from "tss-react/mui";
 
 
@@ -22,6 +23,12 @@ const useStyles = makeStyles()(() => ({
         flexDirection: "row",
         justifyContent: "flex-start",
         gap: "5px"
+    },
+    dropdownContentA: {
+        color: "black",
+        padding: "12px 16px",
+        textDecoration: "none",
+        display: "block"
     }
 }))
 

@@ -26,6 +26,14 @@ export interface SongsProps {
 }
 
 
-export interface SidebarProp {
+export interface PlaylistsProps {
+  playlists: Playlist[],
+  favoriteIds: string[],
+  addHeart: (str: string) => void,
+  removeHeart: (str: string) => void
+}
+
+
+export interface SidebarProp{
     onClickMenu: (str: string) => void
 }

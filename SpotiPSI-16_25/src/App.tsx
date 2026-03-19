@@ -5,8 +5,7 @@ import { useState } from 'react'
 import {useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists} from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
-//import PlayListPage from "./components/Playlist/PlaylistPage.tsx"
-
+import PlaylistsPage from "./components/Playlists/playlistsPage.tsx"
 
 const PLAY = "נגן שירים"
 const TITLE = "SpotiPsi"
@@ -25,7 +24,6 @@ const App = () => {
   const removeHeart = (id: string) => {setFavoriteIds(prev => prev.filter((currentId: string) => id !== currentId))}
   const isLoading = songsLoading || favoritesLoading
   const error = songsError || favoritesError
-
   return (
     <div className={classes.mainContainer}>
       <div className={classes.header}>
@@ -40,7 +38,7 @@ const App = () => {
                     {!isLoading && !error && (
                       <div>
                         {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
-                        {/* {currentPage === "playlists" && <Play songs={songList} favoriteIds={favoriteIds} playlists= {playlists} addHeart={addHeart} removeHeart={removeHeart}/>} */}
+                        {currentPage === "playlists" && <PlaylistsPage playlists={[]} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
                         {currentPage === "favorites" && <FavoritesPage songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
                       </div>
                     )}
