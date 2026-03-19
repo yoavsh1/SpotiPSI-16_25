@@ -8,6 +8,7 @@ const useStyles = makeStyles()(() => ({
         flexDirection: "column",
         minHeight: "100vh", 
         width: "100%",
+        paddingBottom: '80px',
         fontFamily: [
       'Arial',
       'sans-serif',

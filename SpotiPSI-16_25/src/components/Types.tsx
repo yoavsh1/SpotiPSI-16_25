@@ -54,3 +54,4 @@ export interface PlaylistProp {
 export interface SidebarProp{
     onClickMenu: (str: string) => void
 }
+

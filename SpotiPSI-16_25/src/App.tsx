@@ -2,12 +2,14 @@ import useStyles from './app'
 import MusicNoteIcon from '@mui/icons-material/MusicNote'
 import Sidebar from './components/Sidebar/sidebar.tsx'
 import { useState } from 'react'
-import {useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists} from './Hooks/FetchServer.tsx'
+import { useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists } from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
 import MainPlaylistsPage from "./components/PlaylistPage/MainPlaylistPage.tsx"
 import type { Playlist, SongsProps } from './components/Types.tsx'
 
+import PlaylistsPage from "./components/PlaylistPage/playlistsPage.tsx"
+import Player from './components/Player/Player.tsx'
 const PLAY = "נגן שירים"
 const TITLE = "SpotiPsi"
 const App = () => {
@@ -66,14 +68,22 @@ const App = () => {
           </div>
           <div className={classes.sidebar}>
             <Sidebar onClickMenu={onClickMenu} />
+       
+            {songList && songList.length > 0 && (
+              <Player
+                id={songList[0].id}
+                artist={songList[0].artist}
+                name={songList[0].name}
+                album={songList[0].album}
+              />
+            )}
           </div>
         </div>
-         <div className={classes.player}>
-        <p className={classes.textPlay}>{PLAY}</p>
+        <div className={classes.sidebar}>
+          <Sidebar onClickMenu={onClickMenu} />
+        </div>
       </div>
-
-      </div>
+    </div>
   )
 }
-
 export default App
