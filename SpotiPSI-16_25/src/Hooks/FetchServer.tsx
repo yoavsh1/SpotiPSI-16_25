@@ -39,15 +39,16 @@ export const useFetchServerPlaylists = () => {
         fetchSongs<Playlist[]>(setIsLoading, setError, setData, PLAYLISTS)
     }, [])
 
-    return { data, isLoading, error, setData }
+    return { data, isLoading, error, setData, setIsLoading, setError }
 }
 
-async function fetchSongs<T>(setIsLoading: (bool: boolean) => void, setError: (str: string) => void, setData: (data: T) => void, url: string) {
+export async function fetchSongs<T>(setIsLoading: (bool: boolean) => void, setError: (str: string) => void, setData: (data: T) => void, url: string) {
     setIsLoading(true);
     try {
         const response = await fetch(`${BASEURL}/${url}`)
         const data = await response.json() as T;
         setData(data);
+        return data
     }
     catch (error) {
         setError("Something went worng");
@@ -58,3 +59,4 @@ async function fetchSongs<T>(setIsLoading: (bool: boolean) => void, setError: (s
         setIsLoading(false);
     }
 };
+

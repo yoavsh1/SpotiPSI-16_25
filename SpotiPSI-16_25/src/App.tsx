@@ -2,36 +2,30 @@ import useStyles from './app'
 import MusicNoteIcon from '@mui/icons-material/MusicNote'
 import Sidebar from './components/Sidebar/sidebar.tsx'
 import { useState } from 'react'
-import { useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists } from './Hooks/FetchServer.tsx'
+import { useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists, fetchSongs } from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
 import MainPlaylistsPage from "./components/PlaylistPage/MainPlaylistPage.tsx"
-import type { Playlist, SongsProps } from './components/Types.tsx'
-
-import PlaylistsPage from "./components/PlaylistPage/playlistsPage.tsx"
+import type { Playlist } from './components/Types.tsx'
 import Player from './components/Player/Player.tsx'
-const PLAY = "נגן שירים"
+
 const TITLE = "SpotiPsi"
 const App = () => {
   const [currentPage, setCurrentPage] = useState("songs")
   const {classes} = useStyles()
-  
+  const PLAYLISTS = "playlists"
   
   const {data: songList, isLoading: songsLoading, error: songsError} = useFetchServerSongs()
   const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError, setData: setFavoriteIds} = useFetchServerFavorites()
-  const {data: playlists, isLoading: playlistsLoading, error: playlistsError, setData: setPlaylists} = useFetchServerPlaylists()
+  const {data: playlists, isLoading: playlistsLoading, error: playlistsError, setData: setPlaylists,  setIsLoading:setIsLoading 
+    , setError: setError} = useFetchServerPlaylists()
 
 
   const onClickMenu = (str: string) => {setCurrentPage(str)}
   const addHeart = (id: string) => {setFavoriteIds(prev => [...prev, id])}
   const removeHeart = (id: string) => {setFavoriteIds(prev => prev.filter((currentId: string) => id !== currentId))}
-  const addPlaylists = (name: string) => {
-    const playlist: Playlist = {
-      id: crypto.randomUUID.toString(),
-      name,
-      songIds: []
-    }
-    setPlaylists(prev => [...prev, playlist])
+  const addPlaylists = () => {
+    fetchSongs<Playlist[]>(setIsLoading, setError, setPlaylists, PLAYLISTS)
   }
   const addSongToPlaylist = (idSong: string, playlistName: string) => {
     setPlaylists(((prev) => 
@@ -68,7 +62,7 @@ const App = () => {
           </div>
           <div className={classes.sidebar}>
             <Sidebar onClickMenu={onClickMenu} />
-       
+        </div>
             {songList && songList.length > 0 && (
               <Player
                 id={songList[0].id}
@@ -77,13 +71,11 @@ const App = () => {
                 album={songList[0].album}
               />
             )}
-          </div>
+          
         </div>
-        <div className={classes.sidebar}>
-          <Sidebar onClickMenu={onClickMenu} />
-        </div>
-      </div>
+      
     </div>
+    
   )
 }
 export default App
