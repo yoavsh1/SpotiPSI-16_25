@@ -5,7 +5,8 @@ import { useState } from 'react'
 import {useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists} from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
-import PlaylistsPage from "./components/PlaylistPage/playlistsPage.tsx"
+import MainPlaylistsPage from "./components/PlaylistPage/MainPlaylistPage.tsx"
+import type { Playlist, SongsProps } from './components/Types.tsx'
 
 const PLAY = "נגן שירים"
 const TITLE = "SpotiPsi"
@@ -16,12 +17,30 @@ const App = () => {
   
   const {data: songList, isLoading: songsLoading, error: songsError} = useFetchServerSongs()
   const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError, setData: setFavoriteIds} = useFetchServerFavorites()
-  const {data: playlists, isLoading: playlistsLoading, error: playlistsError,} = useFetchServerPlaylists()
+  const {data: playlists, isLoading: playlistsLoading, error: playlistsError, setData: setPlaylists} = useFetchServerPlaylists()
 
 
   const onClickMenu = (str: string) => {setCurrentPage(str)}
   const addHeart = (id: string) => {setFavoriteIds(prev => [...prev, id])}
   const removeHeart = (id: string) => {setFavoriteIds(prev => prev.filter((currentId: string) => id !== currentId))}
+  const addPlaylists = (name: string) => {
+    const playlist: Playlist = {
+      id: crypto.randomUUID.toString(),
+      name,
+      songIds: []
+    }
+    setPlaylists(prev => [...prev, playlist])
+  }
+  const addSongToPlaylist = (idSong: string, playlistName: string) => {
+    setPlaylists(((prev) => 
+      {{const playlist: Playlist | undefined =   prev.find((playlist) => (playlist.name === playlistName))
+      if(playlist)
+        playlist.songIds.push(idSong)}
+      console.log(prev)
+      return prev
+  }))
+    
+  }
   const isLoading = songsLoading || favoritesLoading
   const error = songsError || favoritesError
   return (
@@ -37,9 +56,11 @@ const App = () => {
             {error && <p>{error}</p>}
                     {!isLoading && !error && (
                       <div>
-                        {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
-                        {currentPage === "playlists" && <PlaylistsPage playlists={playlists} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
-                        {currentPage === "favorites" && <FavoritesPage songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
+                        {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} addHeart={addHeart}
+                         removeHeart={removeHeart} playlists={playlists} addSongToPlaylist={addSongToPlaylist}/>}
+                        {currentPage === "playlists" && <MainPlaylistsPage playlists={playlists} 
+                        songsProps={{songs: songList, favoriteIds: favoriteIds, addHeart: addHeart, removeHeart: removeHeart, playlists:playlists, addSongToPlaylist:addSongToPlaylist}} addPlaylist={addPlaylists}/>}
+                        {currentPage === "favorites" && <FavoritesPage addSongToPlaylist={addSongToPlaylist} songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart} playlists={playlists}/>}
                       </div>
                     )}
                 </div>

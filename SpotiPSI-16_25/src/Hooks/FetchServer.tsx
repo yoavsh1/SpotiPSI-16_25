@@ -84,4 +84,4 @@ export const useFetchServerPlaylists = () => {
         fetchSongs()
     }, [])
 
-    return { data, isLoading, error }}
+    return { data, isLoading, error, setData }}

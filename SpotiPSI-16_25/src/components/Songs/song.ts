@@ -24,12 +24,14 @@ const useStyles = makeStyles()(() => ({
         justifyContent: "flex-start",
         gap: "5px"
     },
-    dropdownContentA: {
-        color: "black",
-        padding: "12px 16px",
-        textDecoration: "none",
-        display: "block"
+    menu: {
+        backgroundColor: "#111111",
+
+    },
+    menuText: {
+        color: "white"
     }
+    
 }))
 
 export default useStyles;
