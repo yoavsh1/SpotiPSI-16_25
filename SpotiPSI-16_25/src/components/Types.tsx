@@ -17,7 +17,8 @@ export interface SongProp {
     playlists: Playlist[],
     addHeart: (str: string) => void,
     removeHeart: (str: string) => void,
-    addSongToPlaylist: (idSong: string, playlistName: string) => void
+    addSongToPlaylist: (idSong: string, playlistName: string) => void,
+    playSong:(idSong: string) => void
 }
 
 export interface SongsProps {
@@ -26,7 +27,8 @@ export interface SongsProps {
     playlists: Playlist[],
     addHeart: (str: string) => void,
     removeHeart: (str: string) => void
-    addSongToPlaylist: (idSong: string, playlistName: string) => void
+    addSongToPlaylist: (idSong: string, playlistName: string) => void,
+    playSong:(idSong: string) => void
 }
 
 

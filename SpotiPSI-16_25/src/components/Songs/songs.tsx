@@ -9,15 +9,18 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add';
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import React, { useState } from "react"
+
+import React, { useState, useRef } from "react"
 
 const ADD = "add"
 const REMOVE = "remove"
 const BASEURL = "http://127.0.0.1:5001/api"
 
-const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHeart, playlists, addSongToPlaylist }: SongProp) => {
+const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHeart, playlists, addSongToPlaylist, playSong }: SongProp) => {
     const { classes } = useStyles()
+
     
+
     const [favoritePressed, setFavorite] = useState(favorite)
     const [anchorEl, setAnchor] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
@@ -81,9 +84,14 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
         }
     }
 
+    const onClickSong = () => {
+        playSong(song.id)
+    }
+
     return (
         <div>
-            <div key={song.id} className={classes.song}>
+            <div key={song.id} className={classes.song} onClick={onClickSong}>
+                
                 <div className={classes.songRow}>
                     <IconButton>
                         <PlayArrowIcon sx={{ color: "purple" }}></PlayArrowIcon>
