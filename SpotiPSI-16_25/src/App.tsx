@@ -34,15 +34,14 @@ const App = () => {
   const addSongToPlaylist = (idSong: string, playlistName: string) => {
     setPlaylists(((prev) => 
       {{const playlist: Playlist | undefined =   prev.find((playlist) => (playlist.name === playlistName))
-      if(playlist)
+      if(playlist && !playlist.songIds.includes(idSong))
         playlist.songIds.push(idSong)}
-      console.log(prev)
       return prev
   }))
     
   }
-  const isLoading = songsLoading || favoritesLoading
-  const error = songsError || favoritesError
+  const isLoading = songsLoading || favoritesLoading || playlistsLoading
+  const error = songsError || favoritesError || playlistsError
   return (
     <div className={classes.mainContainer}>
       <div className={classes.header}>

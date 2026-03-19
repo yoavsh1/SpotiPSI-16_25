@@ -13,7 +13,7 @@ const FavoritesPage = ({songs, favoriteIds, addHeart,  removeHeart, playlists, a
             <SongsTable 
                 playlists={playlists}
                 songs={songs.filter((song) => 
-                favoriteIds.indexOf(song.id) > -1)} 
+                favoriteIds.includes(song.id))} 
                 favoriteIds={favoriteIds} 
                 addSongToPlaylist={addSongToPlaylist}
                 addHeart={addHeart} removeHeart={removeHeart}/>

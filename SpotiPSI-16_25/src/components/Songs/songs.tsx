@@ -13,7 +13,7 @@ import React, { useState } from "react"
 
 const ADD = "add"
 const REMOVE = "remove"
-
+const BASEURL = "http://127.0.0.1:5001/api"
 
 const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHeart, playlists, addSongToPlaylist }: SongProp) => {
     const { classes } = useStyles()
@@ -32,7 +32,7 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
 
     const addOrRemoveFavorites = async (str: string) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5001/api/favorites/${str}`, {
+            const response = await fetch(`${BASEURL}/favorites/${str}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,11 +50,11 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
 
     const onClickHeart = () => {
         if (favoritePressed) {
-            addOrRemoveFavorites("remove")
+            addOrRemoveFavorites(REMOVE)
             removeHeart(song.id)
         }
         else {
-            addOrRemoveFavorites("add")
+            addOrRemoveFavorites(ADD)
             addHeart(song.id)
         }
 
@@ -63,7 +63,7 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
 
     const onClickMenuButton = async (id: string, name:string) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5001/api/playlists/${id}/add`, {
+            const response = await fetch(`${BASEURL}/playlists/${id}/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
             return;
         }
     }
-    console.log(playlists)
+
     return (
         <div>
             <div key={song.id} className={classes.song}>

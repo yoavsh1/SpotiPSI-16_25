@@ -21,7 +21,7 @@ export const PlayListPage = ({ playlist, songsProps, changeToPlaylists}: Playlis
             </div>
             <SongsTable 
                 songs={songsProps.songs.filter((song) => 
-                playlist.songIds.indexOf(song.id) > -1)} 
+                playlist.songIds.includes(song.id))} 
                 favoriteIds={songsProps.favoriteIds} 
                 addHeart={songsProps.addHeart}
                 playlists={songsProps.playlists}
