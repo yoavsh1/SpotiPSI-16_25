@@ -13,7 +13,7 @@ const ADDPLAYLIST = "הוסף פלייליסט"
 const CREATEPLAYLIST = "יצירת פלייליסט חדש"
 const ADD = "שמור"
 const CANCEL = "ביטול"
-const PlaylistsPage = ({ playlists, favoriteIds, addHeart,  removeHeart }: PlaylistsProps) => {
+const PlaylistsPage: React.FC<PlaylistsProps> = ({ playlists, favoriteIds, addHeart,  removeHeart }: PlaylistsProps) => {
     const { classes } = useStyles()
     const [dialog, setDialog] = useState(false)
     const text = useRef<HTMLInputElement>(null)
@@ -68,7 +68,7 @@ const PlaylistsPage = ({ playlists, favoriteIds, addHeart,  removeHeart }: Playl
                     <div key={playlist.id}>
                         <div className={classes.text}>
                             <h1>{playlist.name}</h1>
-                            <p>{playlist.songsId.length}</p>
+                            {playlist.songsIds && <p>{playlist.songsIds.length}</p>}
                         </div>
                     </div>
                 </ListItemButton>

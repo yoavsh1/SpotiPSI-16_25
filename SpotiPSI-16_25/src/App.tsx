@@ -5,7 +5,7 @@ import { useState } from 'react'
 import {useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists} from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
-import PlaylistsPage from "./components/Playlists/playlistsPage.tsx"
+import PlaylistsPage from "./components/PlaylistPage/playlistsPage.tsx"
 
 const PLAY = "נגן שירים"
 const TITLE = "SpotiPsi"
@@ -38,7 +38,7 @@ const App = () => {
                     {!isLoading && !error && (
                       <div>
                         {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
-                        {currentPage === "playlists" && <PlaylistsPage playlists={[]} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
+                        {currentPage === "playlists" && <PlaylistsPage playlists={playlists} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
                         {currentPage === "favorites" && <FavoritesPage songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
                       </div>
                     )}
