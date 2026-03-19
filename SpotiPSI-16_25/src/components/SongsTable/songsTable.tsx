@@ -6,7 +6,12 @@ const SongsTable: React.FC<SongsProps> = ({ songs, favoriteIds, addHeart, remove
     return (
         <div>
             {songs.map((song) => (
-                <SongComponent key={song.id} song={song} favorite={favoriteIds.includes(song.id)} addHeart={addHeart} removeHeart={removeHeart} />
+                <SongComponent
+                    key={song.id}
+                    song={song}
+                    favorite={favoriteIds.includes(song.id)}
+                    addHeart={addHeart} 
+                    removeHeart={removeHeart} />
             ))}
         </div>
     )
