@@ -16,10 +16,13 @@ const useStyles = makeStyles()(() => ({
     rightIcons: {
         marginLeft: "auto",
         display: "flex",
-        gap: "10px",
     },
-
-
+    text:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        gap: "5px"
+    }
 }))
 
 export default useStyles;

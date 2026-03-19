@@ -1,43 +1,60 @@
-import { useState, useEffect } from 'react'
-import type { Song } from "./components/Types"
-import AllSongsPage from "./components/AllSongsPage"
-import './App.css'
+import useStyles from './app'
+import MusicNoteIcon from '@mui/icons-material/MusicNote'
+import Sidebar from './components/Sidebar/sidebar.tsx'
+import { useState } from 'react'
+import {useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists} from './Hooks/FetchServer.tsx'
+import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
+import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
+//import PlayListPage from "./components/Playlist/PlaylistPage.tsx"
 
-function App() {
-const [songList, setSongList] = useState<Song[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>();
 
-  const fetchSongs = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("http://127.0.0.1:5001/api/songs")
-      const data = await response.json();
-    
-      setSongList(data);
-    }
-    catch (error) {
-      setError("Something went worng");
-      console.error(error);
-      return;
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchSongs();
-  }, []);
+const PLAY = "נגן שירים"
+const TITLE = "SpotiPsi"
+const App = () => {
+  const [currentPage, setCurrentPage] = useState("songs")
+  const {classes} = useStyles()
+  
+  
+  const {data: songList, isLoading: songsLoading, error: songsError} = useFetchServerSongs()
+  const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError, setData: setFavoriteIds} = useFetchServerFavorites()
+  const {data: playlists, isLoading: playlistsLoading, error: playlistsError,} = useFetchServerPlaylists()
+
+
+  const onClickMenu = (str: string) => {setCurrentPage(str)}
+  const addHeart = (id: string) => {setFavoriteIds(prev => [...prev, id])}
+  const removeHeart = (id: string) => {setFavoriteIds(prev => prev.filter((currentId: string) => id !== currentId))}
+  const isLoading = songsLoading || favoritesLoading
+  const error = songsError || favoritesError
 
   return (
-    <div>
-      <h1>Songs List:</h1>
-      {isLoading && <p>Loading...</p>}
+    <div className={classes.mainContainer}>
+      <div className={classes.header}>
+        <span>{TITLE}</span>
+        <MusicNoteIcon />
+      </div>
+      <div className={classes.mainSection}>
+        <div className={classes.PageContent}>
+          <div>
+            {isLoading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+                    {!isLoading && !error && (
+                      <div>
+                        {currentPage === "songs" && <AllSongsPage songs={songList}  favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
+                        {/* {currentPage === "playlists" && <Play songs={songList} favoriteIds={favoriteIds} playlists= {playlists} addHeart={addHeart} removeHeart={removeHeart}/>} */}
+                        {currentPage === "favorites" && <FavoritesPage songs={songList} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>}
+                      </div>
+                    )}
+                </div>
+          </div>
+          <div className={classes.sidebar}>
+            <Sidebar onClickMenu={onClickMenu} />
+          </div>
+        </div>
+         <div className={classes.player}>
+        <p className={classes.textPlay}>{PLAY}</p>
+      </div>
 
-      {error && <p>{error}</p>}
-
-      {!isLoading && !error && (<AllSongsPage songs={songList}/>)}
-    </div>
+      </div>
   )
 }
 
