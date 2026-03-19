@@ -26,7 +26,7 @@ const App = () => {
     const { data: favoriteIds, isLoading: favoritesLoading, error: favoritesError, setData: setFavoriteIds } = useFetchServerFavorites()
     const { data: playlists, isLoading: playlistsLoading, error: playlistsError, setData: setPlaylists, setIsLoading: setIsLoading
     , setError: setError } = useFetchServerPlaylists()
-    const [currentSong, setCurrentSong] = useState<Song>(songList[0])
+    const [currentSong, setCurrentSong] = useState<Song>()
     
 
     const playSong = (songId: string) => {
@@ -87,7 +87,7 @@ const App = () => {
           <div className={classes.sidebar}>
             <Sidebar onClickMenu={onClickMenu} />
           </div>
-          {songList && songList.length > 0 && (
+          {currentSong && songList.length > 0 && (
             <Player
               id={currentSong.id}
               artist={currentSong.artist}
