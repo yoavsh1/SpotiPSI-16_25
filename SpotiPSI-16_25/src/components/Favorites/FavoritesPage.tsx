@@ -10,7 +10,10 @@ const FavoritesPage = ({songs, favoriteIds, addHeart,  removeHeart }: SongsProps
     return (
         <div>
             <h1 className={classes.header}>{MYFAVORITES}</h1>
-            <SongsTable songs={songs.filter((song) => favoriteIds.indexOf(song.id) > -1)} favoriteIds={favoriteIds} 
+            <SongsTable 
+            songs={songs.filter((song) => 
+            favoriteIds.indexOf(song.id) > -1)} 
+            favoriteIds={favoriteIds} 
             addHeart={addHeart} removeHeart={removeHeart}/>
         </div>
     )

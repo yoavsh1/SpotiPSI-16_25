@@ -10,7 +10,11 @@ const AllSongsPage = ({ songs, favoriteIds, addHeart,  removeHeart }: SongsProps
     return (
         <div>
             <h1 className={classes.header}>{ALLSONGS}</h1>
-            <SongsTable songs={songs} favoriteIds={favoriteIds} addHeart={addHeart} removeHeart={removeHeart}/>
+            <SongsTable 
+            songs={songs} 
+            favoriteIds={favoriteIds} 
+            addHeart={addHeart} 
+            removeHeart={removeHeart}/>
         </div>
     )
 

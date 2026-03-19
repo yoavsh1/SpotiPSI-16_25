@@ -2,7 +2,7 @@ import useStyles from './app'
 import MusicNoteIcon from '@mui/icons-material/MusicNote'
 import Sidebar from './components/Sidebar/sidebar.tsx'
 import { useState } from 'react'
-import {useFetchServerFavorites, useFetchServerSongs} from './Hooks/FetchServer.tsx'
+import {useFetchServerFavorites, useFetchServerSongs, useFetchServerPlaylists} from './Hooks/FetchServer.tsx'
 import AllSongsPage from "./components/AllSongs/AllSongsPage.tsx"
 import FavoritesPage from "./components/Favorites/FavoritesPage.tsx"
 import PlaylistsPage from "./components/Playlists/playlistsPage.tsx"
@@ -15,7 +15,8 @@ const App = () => {
   
   
   const {data: songList, isLoading: songsLoading, error: songsError} = useFetchServerSongs()
-  const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError,setData: setFavoriteIds} = useFetchServerFavorites()
+  const {data: favoriteIds, isLoading: favoritesLoading, error: favoritesError, setData: setFavoriteIds} = useFetchServerFavorites()
+  const {data: playlists, isLoading: playlistsLoading, error: playlistsError,} = useFetchServerPlaylists()
 
 
   const onClickMenu = (str: string) => {setCurrentPage(str)}

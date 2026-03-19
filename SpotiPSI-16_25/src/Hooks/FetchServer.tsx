@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import type { Song } from "../components/Types.tsx"
+import type { Playlist, Song } from '../components/Types.tsx'
 
  export const useFetchServerSongs = () => {
     const [data, setData] = useState<Song[]>([]);
@@ -56,6 +56,32 @@ export const useFetchServerFavorites = () => {
         };
         fetchSongs()
     }, [])
-
-    return { data, setData , isLoading, error }
+    return { data, isLoading, error, setData }
 }
+
+export const useFetchServerPlaylists = () => {
+    const [data, setData] = useState<Playlist[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string>();
+
+    useEffect(() => {
+        const fetchSongs = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch("http://127.0.0.1:5001/api/playlists")
+                const data = await response.json();
+                setData(data);
+            }
+            catch (error) {
+                setError("Something went worng");
+                console.error(error);
+                return;
+            }
+            finally {
+                setIsLoading(false);
+            }
+        };
+        fetchSongs()
+    }, [])
+
+    return { data, isLoading, error }}
