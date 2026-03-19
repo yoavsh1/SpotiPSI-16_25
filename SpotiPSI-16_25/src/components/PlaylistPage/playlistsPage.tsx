@@ -1,21 +1,25 @@
-import type { PlaylistsProps } from "../Types.tsx"
+import { type Playlist, type PlaylistsPageProps } from "../Types.tsx"
 import useStyles from './playlistsPage.ts'
 import ListItemButton from '@mui/material/ListItemButton'
 import { Button, TextField } from "@mui/material"
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+
 import { useState, useRef } from "react"
 const MYPLAYLISTS = "הפלייליסטים שלי"
 const ADDPLAYLIST = "הוסף פלייליסט"
 const CREATEPLAYLIST = "יצירת פלייליסט חדש"
 const ADD = "שמור"
 const CANCEL = "ביטול"
-const PlaylistsPage: React.FC<PlaylistsProps> = ({ playlists, favoriteIds, addHeart,  removeHeart }: PlaylistsProps) => {
+const SONGS = "שירים"
+
+
+const PlaylistsPage: React.FC<PlaylistsPageProps> = ({ playlists , addPlaylist, changePage}: PlaylistsPageProps) => {
     const { classes } = useStyles()
     const [dialog, setDialog] = useState(false)
+    
     const text = useRef<HTMLInputElement>(null)
     const onClickOpen = () => {setDialog(true)}
     const onClickClose = () => {setDialog(false)}
@@ -30,6 +34,7 @@ const PlaylistsPage: React.FC<PlaylistsProps> = ({ playlists, favoriteIds, addHe
                     body: JSON.stringify({name : text.current.value })
                 })
                 const data = await response.json();
+                addPlaylist(text.current.value)
                 onClickClose()
                 return data
             }
@@ -39,6 +44,11 @@ const PlaylistsPage: React.FC<PlaylistsProps> = ({ playlists, favoriteIds, addHe
             return;
         }
     }
+
+    const onClickPlaylist = (playlist: Playlist) => {
+        changePage(playlist)
+    }
+    console.log(playlists)
 
     return (
         <div>
@@ -64,11 +74,11 @@ const PlaylistsPage: React.FC<PlaylistsProps> = ({ playlists, favoriteIds, addHe
             </Dialog>
 
             {playlists.map((playlist) => (
-                <ListItemButton>
-                    <div key={playlist.id}>
+                <ListItemButton key={playlist.id} className={classes.playlist} onClick={() => onClickPlaylist(playlist)}>
+                    <div >
                         <div className={classes.text}>
-                            <h1>{playlist.name}</h1>
-                            {playlist.songsIds && <p>{playlist.songsIds.length}</p>}
+                            <h3>{playlist.name}</h3>
+                            <p>{SONGS}: {playlist.songIds.length}</p>
                         </div>
                     </div>
                 </ListItemButton>

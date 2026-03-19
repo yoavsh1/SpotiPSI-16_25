@@ -7,17 +7,32 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add';
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import React, { useState } from "react"
 
+const ADD = "add"
+const REMOVE = "remove"
+const BASEURL = "http://127.0.0.1:5001/api"
 
-const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHeart }: SongProp) => {
+const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHeart, playlists, addSongToPlaylist }: SongProp) => {
     const { classes } = useStyles()
     
     const [favoritePressed, setFavorite] = useState(favorite)
+    const [anchorEl, setAnchor] = useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl)
+
+    const addClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchor(event.currentTarget)
+    }
+
+    const dropdownClose = () => {
+        setAnchor(null)
+    }
 
     const addOrRemoveFavorites = async (str: string) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5001/api/favorites/${str}`, {
+            const response = await fetch(`${BASEURL}/favorites/${str}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -35,15 +50,35 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
 
     const onClickHeart = () => {
         if (favoritePressed) {
-            addOrRemoveFavorites("remove")
+            addOrRemoveFavorites(REMOVE)
             removeHeart(song.id)
         }
         else {
-            addOrRemoveFavorites("add")
+            addOrRemoveFavorites(ADD)
             addHeart(song.id)
         }
 
         setFavorite(!favoritePressed)
+    }
+
+    const onClickMenuButton = async (id: string, name:string) => {
+        try {
+            const response = await fetch(`${BASEURL}/playlists/${id}/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({songId: song.id})
+            })
+            const data = await response.json();
+            addSongToPlaylist(song.id, name)
+            dropdownClose()
+            return data
+        }
+        catch (error) {
+            console.error(error);
+            return;
+        }
     }
 
     return (
@@ -58,9 +93,21 @@ const SongComponent: React.FC<SongProp> = ({ song, favorite, addHeart, removeHea
                         <ListItemText>{song.artist}</ListItemText>
                     </div>
                     <div className={classes.rightIcons}>
-                        <ListItemButton>
+                        
+                        <ListItemButton onClick={addClick}>
                             <AddIcon />
                         </ListItemButton>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={dropdownClose}
+                            classes={{ paper: classes.menu }}
+                        >
+                            {playlists.map((playlist) => (
+                                <MenuItem onClick={() => onClickMenuButton(playlist.id, playlist.name)} className={classes.menuText}>{playlist.name}</MenuItem>
+                            ))}    
+                        </Menu>
+                        
                         <ListItemButton onClick={onClickHeart}>
                             {favoritePressed ? <FavoriteIcon sx={{ color: "purple" }} /> : <FavoriteBorderIcon />}
                         </ListItemButton>

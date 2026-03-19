@@ -21,10 +21,13 @@ const useStyles = makeStyles()(() => ({
         border: '2px solid DarkOrchid'
     },
     text:{
-        display: "flex",
-        flexDirection: "column",
+        color: 'white',
         justifyContent: "flex-start",
+    },
+    playlist:{
+        width: "99%",
         gap: "5px",
+        margin: "5px",
         borderBottom: "1.5px solid #ccc"
     },
     dialogMain:{

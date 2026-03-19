@@ -1,22 +1,34 @@
-import type { Playlist, SongsProps } from "../Types.tsx"
-import useStyles from '../AllSongs/StyleAllSongsPage.ts'
+import  { type PlaylistProp } from "../Types.tsx"
+import useStyles from './PlaylistPage.ts'
 import SongsTable from '../SongsTable/songsTable.tsx'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import IconButton from '@mui/material/IconButton'
+export const PlayListPage = ({ playlist, songsProps, changeToPlaylists}: PlaylistProp) => {
 
-
-export const PlayListPage = (
-    { songs, favoriteIds, addHeart, removeHeart }: SongsProps ,
-    {id, name, songsIds}: Playlist) => {
     const { classes } = useStyles()
     
+    const onClickIcon = () => {
+        changeToPlaylists()
+    }
+
     return (
         <div>
-            <h1 className={classes.header}>{name}</h1>
+            <div className={classes.header}>
+                <h1 className={classes.headerText}>{playlist.name}</h1>
+                <IconButton onClick={onClickIcon}>
+                    <ArrowBackIcon sx={{ color: "purple" }}/>
+                </IconButton>
+            </div>
             <SongsTable 
-            songs={songs.filter((song) => 
-            songsIds.indexOf(song.id) > -1)} 
-            favoriteIds={favoriteIds} 
-            addHeart={addHeart}
-            removeHeart={removeHeart}/>
+                songs={songsProps.songs.filter((song) => 
+                playlist.songIds.includes(song.id))} 
+                favoriteIds={songsProps.favoriteIds} 
+                addHeart={songsProps.addHeart}
+                playlists={songsProps.playlists}
+                addSongToPlaylist={songsProps.addSongToPlaylist}
+                removeHeart={songsProps.removeHeart}/>
         </div>
     )
 }
+
+export default PlayListPage
